@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+
+
+
+int main(void)
+{
+
+    string text = get_string("Enter your text:\n");
+
+    int letters = 0;
+    int words = 0;
+    int sentences = 0;
+    int grade = 0;
+    float avg_letters, avg_sentences;
+
+    for (int i = 0; i < strlen(text); i++)
+    {
+        // calculate letters
+        if (isalpha(text[i]))
+        {
+            letters++;
+        }
+
+        //calculate words
+        if ((text[i] != ' ' && i == 0) || (text[i] == ' ' && isalpha(text[i + 1])))
+        {
+            words++;
+        }
+
+        //calculate sentences
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?')
+        {
+            sentences++;
+        }
+    }
+    // calculate avg letters per words
+    avg_letters = ((float) letters / (float) words) * 100;
+
+    // calc avg sentences per 100 words
+    avg_sentences = ((float) sentences / (float) words) * 100;
+
+    // calculate score = index = 0.0588 * L - 0.296 * S - 15.8
+    grade = round(0.0588 * avg_letters - 0.296 * avg_sentences - 15.8);
+
+//    printf("\n");
+//    printf("Text: %s\n", text);
+//    printf("\n");
+
+    if (grade <= 16 && grade >= 1)
+    {
+        printf("Grade %i\n", grade);
+    }
+    else if (grade > 16)
+    {
+        printf("Grade 16+\n");
+    }
+    else
+    {
+        printf("Before Grade 1\n");
+    }
+
+
+    /*  printf("Letters: %i\n", letters);
+        printf("Words: %.1i\n", words);
+        printf("Sentences: %.1i\n", sentences);
+        printf("Avg Letters per Word: %.f\n", avg_letters);
+        printf("Avg Sentences per 100 words: %.f\n", avg_sentences);
+    */
+}
